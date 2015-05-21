@@ -58,6 +58,8 @@ public class CheckDirectionAction extends JosmAction implements CheckNextWayI {
 	}
 	
 	private void nextWay() {
+		boolean isDone = true;
+		
 		while (waysIterator.hasNext())
 		{
 			w = waysIterator.next();
@@ -70,11 +72,15 @@ public class CheckDirectionAction extends JosmAction implements CheckNextWayI {
 				Main.map.mapView.zoomTo(boundingVisitor);
 				CheckDirectionDialog dialog = new CheckDirectionDialog(this,nWaysCompleted/(1.*nWaysFixme));
 				dialog.makeVisible();
+				isDone = false;
 				break;
 			}
 		}
-		Notification note = new Notification(tr("No more directions to check!"));
-		note.show();
+		if (isDone) {
+			Notification note = new Notification(tr("No more directions to check!"));
+			note.show();
+		}
+		
 		
 	}
 	

@@ -11,10 +11,10 @@
 ** Call "ant help" to get possible build targets.
 **
 -->
-<project name="kartverketImport" default="dist" basedir=".">
+<project name="kartverketimport" default="dist" basedir=".">
 
     <!-- enter the SVN commit message -->
-    <property name="commit.message" value="Commit message"/>
+    <property name="commit.message" value="Initial"/>
     <!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
     <property name="plugin.main.version" value="7001"/>
     <property name="plugin.version" value="1"/>
