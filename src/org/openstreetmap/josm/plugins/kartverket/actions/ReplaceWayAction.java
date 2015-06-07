@@ -26,7 +26,7 @@ import org.openstreetmap.josm.tools.Shortcut;
 /**
  * Replaces already existing object (id>0) with a new object (id<0).
  *
- * @author Zverik
+ * @author Torstein Bø
  */
 public class ReplaceWayAction extends JosmAction {
     private static final String TITLE = tr("Replace way");
@@ -55,7 +55,7 @@ public class ReplaceWayAction extends JosmAction {
         Way firstObject = (Way) selection.get(0);
         Way secondObject = (Way) selection.get(1);
         Map<String, String> keys;
-        if (firstObject.getId() < 0) {
+        if (firstObject.getId() <= 0) {
         	keys = firstObject.getKeys();
         } else {
         	keys = secondObject.getKeys();
