@@ -8,9 +8,11 @@ import org.openstreetmap.josm.gui.MapFrame;
 import org.openstreetmap.josm.plugins.Plugin;
 import org.openstreetmap.josm.plugins.PluginInformation;
 import org.openstreetmap.josm.plugins.kartverket.actions.CheckDirectionAction;
+import org.openstreetmap.josm.plugins.kartverket.actions.ReplaceWayAction;
 
 public class KartverketPlugin extends Plugin {
 	JMenuItem CheckDirection;
+	JMenuItem mergeWays;
      /**
       * Will be invoked by JOSM to bootstrap the plugin
       *
@@ -20,6 +22,7 @@ public class KartverketPlugin extends Plugin {
          super(info);
          JMenu toolsMenu = Main.main.menu.moreToolsMenu;
          CheckDirection = MainMenu.add(toolsMenu, new CheckDirectionAction());
+         mergeWays = MainMenu.add(toolsMenu, new ReplaceWayAction());
       }
       
       @Override

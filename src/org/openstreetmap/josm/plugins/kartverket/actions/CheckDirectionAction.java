@@ -1,28 +1,19 @@
 package org.openstreetmap.josm.plugins.kartverket.actions;
 
-import static org.openstreetmap.josm.gui.help.HelpUtil.ht;
 import static org.openstreetmap.josm.tools.I18n.tr;
 
-import java.awt.Point;
-import java.awt.Rectangle;
+	
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-
 import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.actions.JosmAction;
-import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.data.osm.Node;
 import org.openstreetmap.josm.data.osm.Way;
 import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
-import org.openstreetmap.josm.gui.ExtendedDialog;
 import org.openstreetmap.josm.gui.Notification;
 import org.openstreetmap.josm.plugins.kartverket.CheckDirectionDialog;
 import org.openstreetmap.josm.plugins.kartverket.CheckNextWayI;

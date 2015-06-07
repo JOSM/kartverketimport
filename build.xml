@@ -17,7 +17,6 @@
     <property name="commit.message" value="Initial"/>
     <!-- enter the *lowest* JOSM version this plugin is currently compatible with -->
     <property name="plugin.main.version" value="7001"/>
-    <property name="plugin.version" value="1"/>
 	<property name="plugin.canloadatruntime" value="true"/>
     <!-- Configure these properties (replace "..." accordingly).
          See http://josm.openstreetmap.de/wiki/DevelopersGuide/DevelopingPlugins
@@ -25,13 +24,17 @@
     <property name="plugin.author" value="Torstein Ingebrigtsen Bø"/>
     <property name="plugin.class" value="org.openstreetmap.josm.plugins.kartverket.KartverketPlugin"/>
     <property name="plugin.description" value="Tools to help import Kartverket N50"/>
+	<property name="plugin.link" value="https://github.com/JOSM/kartverketimport"/> 
     <!--<<property name="plugin.icon" value="..."/>-->
     <!--<property name="plugin.link" value="..."/>-->
     <!--<property name="plugin.early" value="..."/>-->
-    <!--<property name="plugin.requires" value="..."/>-->
+    <property name="plugin.requires" value="utilsplugin2"/>
     <!--<property name="plugin.stage" value="..."/>-->
 
     <!-- ** include targets that all plugins have in common ** -->
     <import file="../build-common.xml"/>
+	<fileset id="plugin.requires.jars" dir="${plugin.dist.dir}">
+		        <include name="utilsplugin2.jar"/>
+	</fileset>
   
 </project>
