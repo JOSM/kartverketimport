@@ -45,7 +45,7 @@ public class ReplaceWayAction extends JosmAction {
 
         // There must be two ways selected: one with id > 0 and one new.
         List<OsmPrimitive> selection = new ArrayList<>(getCurrentDataSet().getSelected());
-        if (selection.size() != 2 && selection.get(0) instanceof Way && selection.get(1) instanceof Way) {
+        if (selection.size() != 2 || !(selection.get(0) instanceof Way && selection.get(1) instanceof Way)) {
             new Notification(
                     tr("This tool replaces coastline of one way with another, and so requires exactly two coatline ways to be selected.")
                 ).setIcon(JOptionPane.WARNING_MESSAGE).show();  
@@ -115,7 +115,16 @@ public class ReplaceWayAction extends JosmAction {
 
     @Override
     protected void updateEnabledState( Collection<? extends OsmPrimitive> selection ) {
-        setEnabled(selection != null && selection.size() >= 2 );
+    	boolean allWays = true;
+    	for (OsmPrimitive w : selection) {
+    		 if( !(w instanceof Way)){
+    			 allWays = false;
+    			 break;
+    		 }
+    			 
+		}
+    	
+        setEnabled(selection != null && selection.size() == 2 && allWays);
     }
 }
 
