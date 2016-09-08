@@ -34,7 +34,7 @@ public class CheckDirectionAction extends JosmAction implements CheckNextWayI {
 	public void actionPerformed(ActionEvent e) {
 		if (!isEnabled())
 			return;
-		ways = getCurrentDataSet().getWays();
+		ways = getLayerManager().getEditDataSet().getWays();
 		nWaysFixme = 0;
 		nWaysCompleted = 0;
 		for (Way w : ways) {
@@ -55,16 +55,16 @@ public class CheckDirectionAction extends JosmAction implements CheckNextWayI {
 		{
 			w = waysIterator.next();
 			if (w.hasTag("FIXME", "Check direction of river/stream")) {
-				getCurrentDataSet().clearSelection();
-				getCurrentDataSet().addSelected(w.getPrimitiveId());
-				BoundingXYVisitor boundingVisitor = new BoundingXYVisitor();
-				boundingVisitor.visit(w);
-				boundingVisitor.enlargeToMinSize(2000.);
-				Main.map.mapView.zoomTo(boundingVisitor);
-				CheckDirectionDialog dialog = new CheckDirectionDialog(this,nWaysCompleted/(1.*nWaysFixme));
-				dialog.makeVisible();
-				isDone = false;
-				break;
+			    getLayerManager().getEditDataSet().clearSelection();
+			    getLayerManager().getEditDataSet().addSelected(w.getPrimitiveId());
+			    BoundingXYVisitor boundingVisitor = new BoundingXYVisitor();
+                            boundingVisitor.visit(w);
+                            boundingVisitor.enlargeToMinSize(2000.);
+                            Main.map.mapView.zoomTo(boundingVisitor);
+                            CheckDirectionDialog dialog = new CheckDirectionDialog(this,nWaysCompleted/(1.*nWaysFixme));
+                            dialog.makeVisible();
+                            isDone = false;
+                            break;
 			}
 		}
 		if (isDone) {
@@ -99,7 +99,7 @@ public class CheckDirectionAction extends JosmAction implements CheckNextWayI {
 	
     @Override
     protected void updateEnabledState() {
-        if (getCurrentDataSet() == null) {
+        if (getLayerManager().getEditDataSet() == null) {
             setEnabled(false);
         } else {
         	setEnabled(true);
