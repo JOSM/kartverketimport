@@ -1,8 +1,8 @@
+// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.kartverket.actions;
 
 import static org.openstreetmap.josm.tools.I18n.tr;
 
-	
 import java.awt.event.ActionEvent;
 import java.util.Collection;
 import java.util.Collections;
@@ -19,90 +19,86 @@ import org.openstreetmap.josm.plugins.kartverket.CheckDirectionDialog;
 import org.openstreetmap.josm.plugins.kartverket.CheckNextWayI;
 
 public class CheckDirectionAction extends JosmAction implements CheckNextWayI {
-	private int nWaysCompleted;
-	private int nWaysFixme;
-	Collection<Way> ways;
-	Iterator<Way> waysIterator;
-	Way w;
-	
-	public CheckDirectionAction() {
-		super(tr("Check direction of streams"), null,
-				tr("Check direction of streams and rivers"), null, true);
-	}
+    private int nWaysCompleted;
+    private int nWaysFixme;
+    Collection<Way> ways;
+    Iterator<Way> waysIterator;
+    Way w;
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (!isEnabled())
-			return;
-		ways = getLayerManager().getEditDataSet().getWays();
-		nWaysFixme = 0;
-		nWaysCompleted = 0;
-		for (Way w : ways) {
-			if (w.hasTag("FIXME", "Check direction of river/stream")) {
-				nWaysFixme ++;
-			}
-		}
-		
-		waysIterator = ways.iterator();
-		nextWay();
+    public CheckDirectionAction() {
+        super(tr("Check direction of streams"), null,
+                tr("Check direction of streams and rivers"), null, true);
+    }
 
-	}
-	
-	private void nextWay() {
-		boolean isDone = true;
-		
-		while (waysIterator.hasNext())
-		{
-			w = waysIterator.next();
-			if (w.hasTag("FIXME", "Check direction of river/stream")) {
-			    getLayerManager().getEditDataSet().clearSelection();
-			    getLayerManager().getEditDataSet().addSelected(w.getPrimitiveId());
-			    BoundingXYVisitor boundingVisitor = new BoundingXYVisitor();
-                            boundingVisitor.visit(w);
-                            boundingVisitor.enlargeToMinSize(2000.);
-                            Main.map.mapView.zoomTo(boundingVisitor);
-                            CheckDirectionDialog dialog = new CheckDirectionDialog(this,nWaysCompleted/(1.*nWaysFixme));
-                            dialog.makeVisible();
-                            isDone = false;
-                            break;
-			}
-		}
-		if (isDone) {
-			Notification note = new Notification(tr("No more directions to check!"));
-			note.show();
-		}
-		
-		
-	}
-	
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (!isEnabled())
+            return;
+        ways = getLayerManager().getEditDataSet().getWays();
+        nWaysFixme = 0;
+        nWaysCompleted = 0;
+        for (Way w : ways) {
+            if (w.hasTag("FIXME", "Check direction of river/stream")) {
+                nWaysFixme++;
+            }
+        }
 
-	@Override
-	public void wayDirectionIsCorrect() {
-		w.remove("FIXME");
-		nWaysCompleted++;
-		nextWay();
-	}
+        waysIterator = ways.iterator();
+        nextWay();
 
-	@Override
-	public void wayDirectionIsWrong() {
-		List<Node> nd = w.getNodes();
-		Collections.reverse(nd);
-		w.setNodes(nd);
-		wayDirectionIsCorrect();
-	}
+    }
 
-	@Override
-	public void wayDirectionIgnore() {
-		nWaysCompleted++;
-		nextWay();
-	}
-	
+    private void nextWay() {
+        boolean isDone = true;
+
+        while (waysIterator.hasNext()) {
+            w = waysIterator.next();
+            if (w.hasTag("FIXME", "Check direction of river/stream")) {
+                getLayerManager().getEditDataSet().clearSelection();
+                getLayerManager().getEditDataSet().addSelected(w.getPrimitiveId());
+                BoundingXYVisitor boundingVisitor = new BoundingXYVisitor();
+                boundingVisitor.visit(w);
+                boundingVisitor.enlargeToMinSize(2000.);
+                Main.map.mapView.zoomTo(boundingVisitor);
+                CheckDirectionDialog dialog = new CheckDirectionDialog(this, nWaysCompleted/(1.*nWaysFixme));
+                dialog.makeVisible();
+                isDone = false;
+                break;
+            }
+        }
+        if (isDone) {
+            Notification note = new Notification(tr("No more directions to check!"));
+            note.show();
+        }
+    }
+
+    @Override
+    public void wayDirectionIsCorrect() {
+        w.remove("FIXME");
+        nWaysCompleted++;
+        nextWay();
+    }
+
+    @Override
+    public void wayDirectionIsWrong() {
+        List<Node> nd = w.getNodes();
+        Collections.reverse(nd);
+        w.setNodes(nd);
+        wayDirectionIsCorrect();
+    }
+
+    @Override
+    public void wayDirectionIgnore() {
+        nWaysCompleted++;
+        nextWay();
+    }
+
     @Override
     protected void updateEnabledState() {
         if (getLayerManager().getEditDataSet() == null) {
             setEnabled(false);
         } else {
-        	setEnabled(true);
+            setEnabled(true);
         }
     }
 

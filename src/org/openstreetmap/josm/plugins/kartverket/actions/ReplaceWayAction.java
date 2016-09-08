@@ -1,4 +1,7 @@
+// License: GPL. For details, see LICENSE file.
 package org.openstreetmap.josm.plugins.kartverket.actions;
+
+import static org.openstreetmap.josm.tools.I18n.tr;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -18,9 +21,6 @@ import org.openstreetmap.josm.gui.Notification;
 import org.openstreetmap.josm.plugins.utilsplugin2.replacegeometry.ReplaceGeometryCommand;
 import org.openstreetmap.josm.plugins.utilsplugin2.replacegeometry.ReplaceGeometryException;
 import org.openstreetmap.josm.plugins.utilsplugin2.replacegeometry.ReplaceGeometryUtils;
-
-import static org.openstreetmap.josm.tools.I18n.tr;
-
 import org.openstreetmap.josm.tools.Shortcut;
 
 /**
@@ -33,8 +33,8 @@ public class ReplaceWayAction extends JosmAction {
 
     public ReplaceWayAction() {
         super(TITLE, null, tr("Replace way of selected way with a new way"),
-                Shortcut.registerShortcut("tools:replacecoastline", tr("Tool: {0}", tr("Replace Geometry")), KeyEvent.VK_S, Shortcut.CTRL_SHIFT)
-                , true);
+                Shortcut.registerShortcut("tools:replacecoastline", tr("Tool: {0}", tr("Replace Geometry")), KeyEvent.VK_S, Shortcut.CTRL_SHIFT),
+                true);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class ReplaceWayAction extends JosmAction {
         if (selection.size() != 2 || !(selection.get(0) instanceof Way && selection.get(1) instanceof Way)) {
             new Notification(
                     tr("This tool replaces coastline of one way with another, and so requires exactly two coatline ways to be selected.")
-                ).setIcon(JOptionPane.WARNING_MESSAGE).show();  
+                    ).setIcon(JOptionPane.WARNING_MESSAGE).show();
             return;
         }
 
@@ -56,75 +56,74 @@ public class ReplaceWayAction extends JosmAction {
         Way secondObject = (Way) selection.get(1);
         Map<String, String> keys;
         if (firstObject.getId() <= 0) {
-        	keys = firstObject.getKeys();
+            keys = firstObject.getKeys();
         } else {
-        	keys = secondObject.getKeys();
+            keys = secondObject.getKeys();
         }
         String source = null;
         String sourceDate = null;
-        if (keys.containsKey("source")){
-        	source = keys.get("source");
-        } 
-        if (keys.containsKey("source:date")) {
-        	sourceDate = keys.get("source:date");
+        if (keys.containsKey("source")) {
+            source = keys.get("source");
         }
-        setSourceAndFixme(firstObject,source,sourceDate);
-        setSourceAndFixme(secondObject,source,sourceDate);
-        
+        if (keys.containsKey("source:date")) {
+            sourceDate = keys.get("source:date");
+        }
+        setSourceAndFixme(firstObject, source, sourceDate);
+        setSourceAndFixme(secondObject, source, sourceDate);
+
         try {
-        	firstObject.getKeys();
-        	
+            firstObject.getKeys();
+
             ReplaceGeometryCommand replaceCommand =
                     ReplaceGeometryUtils.buildReplaceWayWithNewCommand(Arrays.asList(firstObject, secondObject));
-            
+
             // action was canceled
             if (replaceCommand == null)
                 return;
-            
+
             Main.main.undoRedo.add(replaceCommand);
         } catch (IllegalArgumentException ex) {
             new Notification(
-                ex.getMessage()
-            ).setIcon(JOptionPane.WARNING_MESSAGE).show(); 
+                    ex.getMessage()
+                    ).setIcon(JOptionPane.WARNING_MESSAGE).show();
         } catch (ReplaceGeometryException ex) {
             new Notification(
-                ex.getMessage()
-            ).setIcon(JOptionPane.WARNING_MESSAGE).show(); 
+                    ex.getMessage()
+                    ).setIcon(JOptionPane.WARNING_MESSAGE).show();
         }
     }
 
-	private void setSourceAndFixme(Way way, String source, String sourceDate) {
-		Map<String, String> keys = way.getKeys();
-		if (source != null)
-			keys.put("source", source);
-		if (sourceDate != null)
-			keys.put("source:date", sourceDate);
-        if (keys.containsKey("FIXME") && keys.get("FIXME") == "Merge"){
-        	keys.remove("FIXME");
+    private void setSourceAndFixme(Way way, String source, String sourceDate) {
+        Map<String, String> keys = way.getKeys();
+        if (source != null)
+            keys.put("source", source);
+        if (sourceDate != null)
+            keys.put("source:date", sourceDate);
+        if (keys.containsKey("FIXME") && keys.get("FIXME") == "Merge") {
+            keys.remove("FIXME");
         }
         way.setKeys(keys);
-	}
+    }
 
     @Override
     protected void updateEnabledState() {
-        if( getLayerManager().getEditDataSet() == null ) {
+        if (getLayerManager().getEditDataSet() == null) {
             setEnabled(false);
-        }  else
+        } else
             updateEnabledState(getLayerManager().getEditDataSet().getSelected());
     }
 
     @Override
-    protected void updateEnabledState( Collection<? extends OsmPrimitive> selection ) {
-    	boolean allWays = true;
-    	for (OsmPrimitive w : selection) {
-    		 if( !(w instanceof Way)){
-    			 allWays = false;
-    			 break;
-    		 }
-    			 
-		}
-    	
+    protected void updateEnabledState(Collection<? extends OsmPrimitive> selection) {
+        boolean allWays = true;
+        for (OsmPrimitive w : selection) {
+            if (!(w instanceof Way)) {
+                allWays = false;
+                break;
+            }
+
+        }
+
         setEnabled(selection != null && selection.size() == 2 && allWays);
     }
 }
-
