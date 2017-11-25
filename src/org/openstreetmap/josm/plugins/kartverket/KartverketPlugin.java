@@ -4,7 +4,7 @@ package org.openstreetmap.josm.plugins.kartverket;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import org.openstreetmap.josm.Main;
+import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.gui.MainMenu;
 import org.openstreetmap.josm.gui.MapFrame;
 import org.openstreetmap.josm.plugins.Plugin;
@@ -22,7 +22,7 @@ public class KartverketPlugin extends Plugin {
      */
     public KartverketPlugin(PluginInformation info) {
         super(info);
-        JMenu toolsMenu = Main.main.menu.moreToolsMenu;
+        JMenu toolsMenu = MainApplication.getMenu().moreToolsMenu;
         CheckDirection = MainMenu.add(toolsMenu, new CheckDirectionAction());
         mergeWays = MainMenu.add(toolsMenu, new ReplaceWayAction());
     }

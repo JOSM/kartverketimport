@@ -9,11 +9,11 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.actions.JosmAction;
 import org.openstreetmap.josm.data.osm.Node;
 import org.openstreetmap.josm.data.osm.Way;
 import org.openstreetmap.josm.data.osm.visitor.BoundingXYVisitor;
+import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.gui.Notification;
 import org.openstreetmap.josm.plugins.kartverket.CheckDirectionDialog;
 import org.openstreetmap.josm.plugins.kartverket.CheckNextWayI;
@@ -59,7 +59,7 @@ public class CheckDirectionAction extends JosmAction implements CheckNextWayI {
                 BoundingXYVisitor boundingVisitor = new BoundingXYVisitor();
                 boundingVisitor.visit(w);
                 boundingVisitor.enlargeToMinSize(2000.);
-                Main.map.mapView.zoomTo(boundingVisitor);
+                MainApplication.getMap().mapView.zoomTo(boundingVisitor);
                 CheckDirectionDialog dialog = new CheckDirectionDialog(this, nWaysCompleted/(1.*nWaysFixme));
                 dialog.makeVisible();
                 isDone = false;
