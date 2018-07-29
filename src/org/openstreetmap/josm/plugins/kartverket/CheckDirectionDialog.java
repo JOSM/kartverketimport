@@ -101,7 +101,7 @@ public class CheckDirectionDialog extends JDialog {
         StopCheck() {
             putValue(NAME, tr("Close"));
             putValue(SHORT_DESCRIPTION, tr("Close the dialog"));
-            putValue(SMALL_ICON, ImageProvider.get("cancel"));
+            new ImageProvider("cancel").getResource().attachImageIcon(this, true);
         }
 
         @Override
@@ -117,7 +117,7 @@ public class CheckDirectionDialog extends JDialog {
             putValue(NAME, tr("<HTML><U>C</U>orrect direction</HTML>"));
             putValue(MNEMONIC_KEY, KeyEvent.VK_C);
             putValue(SHORT_DESCRIPTION, tr("Direction of river is correct."));
-            putValue(SMALL_ICON, ImageProvider.get("ok"));
+            new ImageProvider("ok").getResource().attachImageIcon(this, true);
             this.parent = parent;
         }
 
@@ -134,7 +134,7 @@ public class CheckDirectionDialog extends JDialog {
             putValue(NAME, tr("<HTML><U>W</U>rong dirrection</HTML>"));
             putValue(MNEMONIC_KEY, KeyEvent.VK_W);
             putValue(SHORT_DESCRIPTION, tr("Direction of river is wrong."));
-            putValue(SMALL_ICON, ImageProvider.get("wayflip"));
+            new ImageProvider("wayflip").getResource().attachImageIcon(this, true);
             this.parent = parent;
         }
 
@@ -150,7 +150,7 @@ public class CheckDirectionDialog extends JDialog {
         WayDirectionIgnore(CheckNextWayI parent) {
             putValue(NAME, tr("<HTML><U>I</U>gnore this way</HTML>"));
             putValue(SHORT_DESCRIPTION, tr("Ignore direction of this way."));
-            putValue(SMALL_ICON, ImageProvider.get("redo"));
+            new ImageProvider("redo").getResource().attachImageIcon(this, true);
             putValue(MNEMONIC_KEY, KeyEvent.VK_I);
             this.parent = parent;
         }
