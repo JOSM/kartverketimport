@@ -17,7 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import org.openstreetmap.josm.Main;
+import org.openstreetmap.josm.gui.MainApplication;
 import org.openstreetmap.josm.gui.SideButton;
 import org.openstreetmap.josm.tools.ImageProvider;
 
@@ -29,7 +29,7 @@ public class CheckDirectionDialog extends JDialog {
     private SideButton defaultButton;
 
     public CheckDirectionDialog(CheckNextWayI checkNextWay, double progress) {
-        super(JOptionPane.getFrameForComponent(Main.parent), false);
+        super(JOptionPane.getFrameForComponent(MainApplication.getMainFrame()), false);
         stop = new StopCheck();
         wayCorrect = new WayDirectionCorrect(checkNextWay);
         wayWrong = new WayDirectionWrong(checkNextWay);

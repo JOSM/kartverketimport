@@ -13,8 +13,8 @@ import java.util.Map;
 
 import javax.swing.JOptionPane;
 
-import org.openstreetmap.josm.Main;
 import org.openstreetmap.josm.actions.JosmAction;
+import org.openstreetmap.josm.data.UndoRedoHandler;
 import org.openstreetmap.josm.data.osm.OsmPrimitive;
 import org.openstreetmap.josm.data.osm.Way;
 import org.openstreetmap.josm.gui.Notification;
@@ -24,7 +24,7 @@ import org.openstreetmap.josm.plugins.utilsplugin2.replacegeometry.ReplaceGeomet
 import org.openstreetmap.josm.tools.Shortcut;
 
 /**
- * Replaces already existing object (id>0) with a new object (id<0).
+ * Replaces already existing object (id&gt;0) with a new object (id&lt;0).
  *
  * @author Torstein Bø
  */
@@ -81,7 +81,7 @@ public class ReplaceWayAction extends JosmAction {
             if (replaceCommand == null)
                 return;
 
-            Main.main.undoRedo.add(replaceCommand);
+            UndoRedoHandler.getInstance().add(replaceCommand);
         } catch (IllegalArgumentException ex) {
             new Notification(
                     ex.getMessage()
