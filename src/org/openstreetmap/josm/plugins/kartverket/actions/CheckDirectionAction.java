@@ -58,7 +58,7 @@ public class CheckDirectionAction extends JosmAction implements CheckNextWayI {
                 getLayerManager().getEditDataSet().addSelected(w.getPrimitiveId());
                 BoundingXYVisitor boundingVisitor = new BoundingXYVisitor();
                 boundingVisitor.visit(w);
-                boundingVisitor.enlargeToMinSize(2000.);
+                boundingVisitor.enlargeBoundingBoxLogarithmically();
                 MainApplication.getMap().mapView.zoomTo(boundingVisitor);
                 CheckDirectionDialog dialog = new CheckDirectionDialog(this, nWaysCompleted/(1.*nWaysFixme));
                 dialog.makeVisible();
