@@ -33,7 +33,8 @@ public class ReplaceWayAction extends JosmAction {
 
     public ReplaceWayAction() {
         super(TITLE, null, tr("Replace way of selected way with a new way"),
-                Shortcut.registerShortcut("tools:replacecoastline", tr("Tool: {0}", tr("Replace Geometry")), KeyEvent.VK_S, Shortcut.CTRL_SHIFT),
+                Shortcut.registerShortcut("tools:replacecoastline", tr("More tools: {0}", tr("Replace Geometry")),
+                    KeyEvent.VK_S, Shortcut.CTRL_SHIFT),
                 true);
     }
 
