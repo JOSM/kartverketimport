@@ -21,8 +21,9 @@
 
 	<target name="additional-manifest">
         <manifest file="MANIFEST" mode="update">
-            <attribute name="12643_Plugin-Url" value="v1.0;https://github.com/JOSM/kartverketimport/releases/download/v1.0/kartverketimport.jar" />
-        	<attribute name="14153_Plugin-Url" value="v1.0;https://github.com/JOSM/kartverketimport/releases/download/v1.0.1/kartverketimport.jar" />
+          <attribute name="12643_Plugin-Url" value="v1.0;https://github.com/JOSM/kartverketimport/releases/download/v1.0/kartverketimport.jar" />
+        	<attribute name="14153_Plugin-Url" value="v1.0.1;https://github.com/JOSM/kartverketimport/releases/download/v1.0.1/kartverketimport.jar" />
+          <attribute name="14628_Plugin-Url" value="v1.0.3;https://github.com/JOSM/kartverketimport/releases/download/v1.0.3/kartverketimport.jar" />
         </manifest>
     </target>
 
